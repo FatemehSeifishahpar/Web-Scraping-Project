@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
 
 
 import pandas as pd
@@ -9,32 +8,14 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-
-# In[2]:
-
-
 res= requests.get("https://victoria.craigslist.org/search/apa")
-
-
-# In[6]:
-
 
 bs= BeautifulSoup(res.content,"lxml")
 
 
-# In[15]:
-
-
 all_ads = bs.find_all("ul", attrs={"id":"search-results"})[0]
 
-
-# In[21]:
-
-
 all_ads = all_ads.find_all('li', attrs ={ "class": "result-row"})
-
-
-# In[96]:
 
 
 df= pd.DataFrame(columns = ['URL','date','Title', 'Price', 'Home Property', 'Hood','latitude', 'longitude', 'tags','Description'])
@@ -84,9 +65,6 @@ for ad in all_ads :
     df = df.append({'URL': URL, 'date': ad_date,'Title': title, 'Price': price, 'Home Property': home_prop, 'Hood': hood, 'Description': description , 'latitude':latitude , 'longitude':longitude , 'tags': ','.join(tag_list)}, ignore_index=True)
     
 df
-
-
-# In[ ]:
 
 
 
